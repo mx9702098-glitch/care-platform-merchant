@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字关爱平台 - 团队信息</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif; background: #f5f6f8; color: #1d2129; font-size: 14px; }
+        
+        /* ====== 顶部导航 ====== */
+        .top-nav { height: 56px; background: #fff; border-bottom: 1px solid #e5e6eb; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
+        .top-nav-left { display: flex; align-items: center; gap: 16px; }
+        .top-nav-logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; color: #1d2129; }
+        .top-nav-logo img { width: 28px; height: 28px; }
+        .top-nav-logo svg { width: 28px; height: 28px; }
+        .top-nav-collapse { cursor: pointer; font-size: 18px; color: #86909c; padding: 4px 8px; }
+        .top-nav-right { display: flex; align-items: center; gap: 20px; }
+        .top-nav-right .help-link { font-size: 13px; color: #4e5969; cursor: pointer; }
+        .top-nav-right .help-link:hover { color: #1d2129; }
+        .nav-bell { position: relative; cursor: pointer; color: #86909c; font-size: 16px; }
+        .nav-bell-count { font-size: 12px; color: #86909c; }
+        .nav-avatar { width: 32px; height: 32px; border-radius: 50%; background: #ff4d4f; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .nav-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .nav-user-info { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+        .nav-user-info .team-label { color: #86909c; }
+        .nav-user-info .team-name { color: #1d2129; font-weight: 600; }
+        .nav-user-info .role-label { color: #86909c; font-size: 12px; }
+
+        /* ====== 左侧菜单 ====== */
+        .sidebar { width: 200px; background: #fff; border-right: 1px solid #e5e6eb; position: fixed; top: 56px; left: 0; bottom: 0; overflow-y: auto; z-index: 90; }
+        .sidebar-header { padding: 20px 16px 8px; }
+        .sidebar-header .greeting { font-size: 16px; font-weight: 800; color: #1d2129; margin-bottom: 8px; }
+        .sidebar-avatar { width: 40px; height: 40px; border-radius: 50%; background: #f2f3f5; display: flex; align-items: center; justify-content: center; }
+        .sidebar-avatar svg { width: 20px; height: 20px; color: #c9cdd4; }
+        
+        .menu-group { margin-bottom: 4px; }
+        .menu-group-title { padding: 16px 16px 6px; font-size: 12px; color: #86909c; font-weight: 500; }
+        .menu-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; font-size: 14px; color: #4e5969; cursor: pointer; transition: all 0.15s; position: relative; }
+        .menu-item:hover { background: #f7f8fa; }
+        .menu-item.active { background: #f0f3ff; color: #4e6ef2; font-weight: 600; }
+        .menu-item.active::before { content: ''; position: absolute; left: 0; top: 4px; bottom: 4px; width: 3px; background: #4e6ef2; border-radius: 0 2px 2px 0; }
+        .menu-item svg { width: 16px; height: 16px; flex-shrink: 0; }
+        .menu-item .badge { margin-left: auto; background: #ff4d4f; color: #fff; font-size: 10px; padding: 1px 6px; border-radius: 10px; font-weight: 600; }
+        .menu-item .alert-dot { width: 6px; height: 6px; background: #ff4d4f; border-radius: 50%; margin-left: auto; }
+        .menu-item .alert-text { font-size: 11px; color: #ff4d4f; margin-left: 4px; }
+        .dot-badge { margin-left: auto; display: flex; align-items: center; gap: 3px; }
+        .dot-r { width: 6px; height: 6px; border-radius: 50%; background: #ff4d4f; animation: blink 2s ease-in-out infinite; }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+        .dot-text { font-size: 11px; color: #ff4d4f; font-weight: 500; }
+        
+        .sidebar-footer { padding: 12px 16px; border-top: 1px solid #f2f3f5; font-size: 11px; color: #c9cdd4; position: absolute; bottom: 0; left: 0; right: 0; background: #fff; }
+
+        /* ====== 主内容区 ====== */
+        .main-content { margin-left: 200px; margin-top: 56px; padding: 24px; min-height: calc(100vh - 56px); }
+        
+        /* ====== 通知横幅（浅蓝色信息条） ====== */
+        .notice-banner { position: relative; padding: 16px 40px 16px 20px; background: #E6F4FF; border: 1px solid #BAD7FF; border-radius: 8px; margin-bottom: 20px; transition: all .2s; }
+        .notice-banner.hidden { display: none; }
+        .nb-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+        .nb-icon { font-size: 16px; flex-shrink: 0; }
+        .nb-title { font-size: 14px; font-weight: 700; color: #1d2129; }
+        .nb-body { padding-left: 2px; }
+        .nb-desc { font-size: 13px; color: #4e5969; line-height: 1.85; }
+        .nb-desc strong { color: #1d2129; font-weight: 600; }
+        .nb-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+        .nb-tag { font-size: 11px; padding: 1px 8px; border-radius: 3px; background: rgba(78,110,242,.1); color: #4e6ef2; border: 1px solid rgba(78,110,242,.2); font-weight: 500; }
+        .nb-link { font-size: 12px; color: #4e6ef2; font-weight: 500; cursor: pointer; margin-top: 6px; display: inline-block; }
+        .nb-link:hover { text-decoration: underline; }
+        .nb-close { position: absolute; top: 14px; right: 14px; font-size: 16px; color: #8C8C8C; cursor: pointer; line-height: 1; transition: color .12s; }
+        .nb-close:hover { color: #262626; }
+
+        /* ====== 站内信弹窗 ====== */
+        .modal-overlay { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.42); display: flex; align-items: center; justify-content: center; }
+        .modal-overlay.hidden { display: none; }
+        .modal-box { background: #fff; border-radius: 8px; width: 480px; box-shadow: 0 8px 40px rgba(0,0,0,0.18); overflow: hidden; animation: mIn .2s ease; }
+        @keyframes mIn { from{opacity:0;transform:translateY(-10px) scale(.97)} to{opacity:1;transform:none} }
+        .m-head { padding: 18px 24px 14px; border-bottom: 1px solid #F0F0F0; display: flex; align-items: flex-start; gap: 12px; }
+        .m-ico { width: 36px; height: 36px; border-radius: 50%; background: #FFF1F0; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+        .m-title { font-size: 15px; font-weight: 600; color: #141414; margin-bottom: 2px; }
+        .m-sub { font-size: 12px; color: #8C8C8C; }
+        .m-x { margin-left: auto; font-size: 16px; color: #BFBFBF; cursor: pointer; padding: 2px; transition: color .12s; }
+        .m-x:hover { color: #262626; }
+        .m-body { padding: 16px 24px; }
+        .m-intro { font-size: 13px; color: #595959; line-height: 1.75; padding: 10px 14px; background: #fafafa; border-radius: 4px; margin-bottom: 14px; }
+        .m-list { display: flex; flex-direction: column; gap: 6px; }
+        .m-row { display: flex; align-items: center; gap: 10px; padding: 9px 12px; background: #fafafa; border-radius: 5px; border: 1px solid #F0F0F0; }
+        .m-row-ico { font-size: 14px; flex-shrink: 0; display: none; }
+        .m-row-name { font-size: 13px; color: #262626; font-weight: 500; flex: 1; }
+        .m-row-tag { font-size: 11px; font-weight: 500; padding: 1px 7px; border-radius: 3px; background: #FEF0ED; color: #D4604A; border: 1px solid #F3C0B3; }
+        .m-foot { padding: 12px 24px 18px; border-top: 1px solid #F0F0F0; display: flex; gap: 8px; justify-content: flex-end; }
+        .btn-p { padding: 5px 18px; background: #E8392A; color: #fff; border: none; border-radius: 5px; font-size: 13px; font-weight: 500; cursor: pointer; transition: opacity .12s; font-family: inherit; }
+        .btn-p:hover { opacity: .88; }
+        .btn-d { padding: 5px 14px; background: #fff; color: #595959; border: 1px solid #d9d9d9; border-radius: 5px; font-size: 13px; cursor: pointer; transition: border-color .12s; font-family: inherit; }
+        .btn-d:hover { border-color: #8C8C8C; }
+
+        /* ====== 关爱主页预览弹窗 ====== */
+        .preview-overlay { position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; }
+        .preview-overlay.hidden { display: none; }
+        .preview-box { background: #fff; border-radius: 12px; width: 400px; max-height: 85vh; box-shadow: 0 12px 48px rgba(0,0,0,0.2); overflow: hidden; animation: mIn .25s ease; display: flex; flex-direction: column; }
+        .preview-header { padding: 14px 20px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+        .preview-header-title { font-size: 15px; font-weight: 600; color: #141414; }
+        .preview-header-close { font-size: 18px; color: #bfbfbf; cursor: pointer; transition: color .12s; }
+        .preview-header-close:hover { color: #262626; }
+        .preview-body { overflow-y: auto; flex: 1; }
+        .preview-phone { width: 100%; background: #f5f5f5; }
+        /* 手机模拟框 */
+        .phone-frame { margin: 16px auto; width: 340px; background: #fff; border-radius: 24px; box-shadow: 0 2px 16px rgba(0,0,0,0.08); overflow: hidden; border: 1px solid #e8e8e8; }
+        .phone-status-bar { height: 28px; background: #fafafa; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #999; }
+        .phone-content { padding: 0; }
+        /* 关爱主页头部 */
+        .hp-banner { width: 100%; height: 120px; background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%); position: relative; display: flex; align-items: flex-end; padding: 12px 16px; }
+        .hp-banner-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); font-size: 12px; }
+        .hp-org-row { display: flex; align-items: center; gap: 10px; padding: 14px 16px 10px; }
+        .hp-org-logo { width: 44px; height: 44px; border-radius: 8px; background: #f0f0f0; border: 2px solid #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #bfbfbf; margin-top: -28px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); flex-shrink: 0; }
+        .hp-org-logo.has-logo { background: #ff4d4f; color: #fff; font-weight: 700; font-size: 14px; }
+        .hp-org-name { font-size: 15px; font-weight: 700; color: #1a1a1a; }
+        .hp-slogan { padding: 0 16px 10px; font-size: 12px; color: #666; line-height: 1.5; }
+        .hp-slogan.empty { color: #ccc; font-style: italic; }
+        .hp-section { padding: 10px 16px; }
+        .hp-section-title { font-size: 12px; font-weight: 600; color: #1a1a1a; margin-bottom: 6px; }
+        .hp-info-row { display: flex; align-items: flex-start; gap: 6px; padding: 4px 0; font-size: 11px; }
+        .hp-info-label { color: #999; flex-shrink: 0; width: 48px; }
+        .hp-info-val { color: #333; flex: 1; }
+        .hp-info-val.empty { color: #ccc; font-style: italic; }
+        .hp-divider { height: 6px; background: #f5f5f5; }
+        .hp-tab-bar { display: flex; border-bottom: 1px solid #f0f0f0; padding: 0 16px; }
+        .hp-tab { padding: 8px 0; margin-right: 20px; font-size: 12px; color: #999; position: relative; }
+        .hp-tab.active { color: #ff4d4f; font-weight: 600; }
+        .hp-tab.active::after { content:''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: #ff4d4f; border-radius: 1px; }
+        .hp-empty-list { padding: 24px 0; text-align: center; font-size: 11px; color: #ccc; }
+        .phone-bottom-bar { height: 36px; background: #fafafa; display: flex; align-items: center; justify-content: center; gap: 20px; border-top: 1px solid #f0f0f0; }
+        .phone-bottom-btn { font-size: 11px; color: #ff4d4f; font-weight: 500; padding: 4px 14px; background: rgba(255,77,79,0.06); border-radius: 12px; }
+        .preview-footer { padding: 12px 20px; border-top: 1px solid #f0f0f0; text-align: center; flex-shrink: 0; }
+        .preview-footer-hint { font-size: 11px; color: #999; }
+        .section-card { background: #fff; border: 1px solid #e5e6eb; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px; position: relative; }
+        .section-title { font-size: 15px; font-weight: 700; color: #1d2129; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+        .section-title .eye-icon { color: #c9cdd4; cursor: pointer; font-size: 16px; }
+        
+        .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+        .field-item { padding: 12px 0; border-top: 1px solid #f2f3f5; display: flex; align-items: flex-start; gap: 0; min-height: 44px; }
+        .field-grid > .field-item:nth-child(1),
+        .field-grid > .field-item:nth-child(2) { border-top: none; }
+        .field-item:nth-child(odd) { padding-right: 48px; }
+        .field-item:nth-child(even) { padding-left: 4px; }
+        .field-label { font-size: 13px; color: #8C8C8C; width: 148px; flex-shrink: 0; padding-top: 1px; line-height: 1.6; }
+        .field-value { font-size: 13px; color: #262626; flex: 1; word-break: break-all; line-height: 1.6; }
+        .field-value.empty { color: #BFBFBF; }
+        /* 新字段高亮（珊瑚粉背景） */
+        .field-item.hl { background: #FEF0ED; margin: 0 -6px; padding-left: 6px; padding-right: 48px; border-radius: 4px; }
+        .field-item.hl:nth-child(even) { padding-left: 10px; padding-right: 0; }
+        .field-item.hl .field-label { color: #1A1A1A; }
+        /* 待完善标签 */
+        .tag-pend { display: inline-flex; align-items: center; font-size: 11px; font-weight: 500; padding: 1px 7px; border-radius: 3px; background: #FEF0ED; color: #D4604A; border: 1px solid #F3C0B3; margin-left: 6px; vertical-align: middle; flex-shrink: 0; }
+        .tag-wait { display: inline-flex; align-items: center; font-size: 10px; font-weight: 500; padding: 0px 5px; border-radius: 2px; background: #FEF0ED; color: #D4604A; border: 1px solid #F3C0B3; margin-left: 5px; vertical-align: middle; flex-shrink: 0; line-height: 16px; }
+        .tag-done { display: inline-flex; align-items: center; font-size: 11px; font-weight: 500; padding: 1px 7px; border-radius: 3px; background: #F6FFED; color: #389E0D; border: 1px solid #B7EB8F; margin-left: 6px; vertical-align: middle; flex-shrink: 0; }
+        /* 上传占位 */
+        .upload-ph { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #BFBFBF; border: 1px dashed #BFBFBF; border-radius: 5px; padding: 4px 12px; cursor: pointer; background: #fafafa; transition: border-color .12s, color .12s; }
+        .upload-ph:hover { border-color: #1677FF; color: #1677FF; }
+        .upload-ph.hl-upload { border-color: #BAD7FF; color: #1677FF; background: #fff; }
+        /* 填写提示 */
+        .fill-hint { color: #BFBFBF; font-size: 13px; }
+        .fill-link { font-size: 11px; color: #1677FF; cursor: pointer; margin-left: 4px; }
+        .fill-link:hover { text-decoration: underline; }
+        .hint-sub { font-size: 11px; color: #BFBFBF; margin-top: 3px; }
+        /* 行内编辑输入框 */
+        .inline-input { width: 100%; max-width: 320px; padding: 6px 10px; font-size: 13px; color: #262626; border: 1px solid #d9d9d9; border-radius: 4px; outline: none; transition: border-color .2s; }
+        .inline-input:focus { border-color: #1677FF; box-shadow: 0 0 0 2px rgba(22,119,255,0.1); }
+        .inline-input::placeholder { color: #bfbfbf; }
+        .inline-input-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .inline-btn { font-size: 12px; padding: 5px 14px; border-radius: 4px; cursor: pointer; border: none; transition: all .15s; }
+        .inline-btn-ok { background: #1677FF; color: #fff; }
+        .inline-btn-ok:hover { background: #4096ff; }
+        .inline-btn-cancel { background: #f5f5f5; color: #666; }
+        .inline-btn-cancel:hover { background: #e8e8e8; }
+        .char-count { font-size: 11px; color: #bfbfbf; }
+        /* 上传区域 */
+        .upload-area { width: 200px; height: 90px; border: 1px dashed #d9d9d9; border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: border-color .2s; background: #fafafa; }
+        .upload-area:hover { border-color: #1677FF; }
+        .upload-area-icon { font-size: 22px; color: #bfbfbf; line-height: 1; }
+        .upload-area-text { font-size: 11px; color: #999; margin-top: 4px; }
+        .upload-preview-img { width: 200px; height: 90px; border-radius: 6px; object-fit: cover; border: 1px solid #e8e8e8; }
+        .upload-row { display: flex; align-items: flex-start; gap: 10px; }
+        .upload-actions { display: flex; gap: 6px; margin-top: 6px; }
+
+        /* ====== 合作意向表 ====== */
+        .intent-table { width: 100%; border-collapse: collapse; }
+        .intent-table th { text-align: left; padding: 10px 16px; font-size: 12px; font-weight: 600; color: #86909c; background: #f7f8fa; border-bottom: 1px solid #e5e6eb; }
+        .intent-table td { padding: 14px 16px; font-size: 13px; color: #4e5969; border-bottom: 1px solid #f2f3f5; }
+        .intent-table tr:hover td { background: #f7f8fa; }
+        .intent-type-tag { display: inline-block; background: #f0f3ff; color: #4e6ef2; font-size: 11px; padding: 2px 8px; border-radius: 3px; margin-right: 4px; font-weight: 500; }
+        .intent-status { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 10px; }
+        .intent-status.pending { background: #fff7e8; color: #d46b08; }
+        .intent-status.contacted { background: #e8ffea; color: #00b42a; }
+        .btn-mark { background: none; border: none; color: #4e6ef2; font-size: 12px; font-weight: 600; cursor: pointer; }
+        .btn-mark:hover { text-decoration: underline; }
+
+        /* ====== 页面头 ====== */
+        .page-header { margin-bottom: 20px; }
+        .page-header .breadcrumb { font-size: 12px; color: #86909c; margin-bottom: 4px; }
+        .page-header .page-title-row { display: flex; align-items: center; justify-content: space-between; }
+        .page-header h2 { font-size: 18px; font-weight: 700; color: #1d2129; }
+
+
+        /* ====== 空页面占位 ====== */
+        .empty-page { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; color: #c9cdd4; }
+        .empty-page .empty-icon { font-size: 40px; margin-bottom: 12px; }
+        .empty-page p { font-size: 13px; }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <div class="top-nav">
+        <div class="top-nav-left">
+            <div class="top-nav-logo">
+                <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="14" fill="#ff4d4f"/><path d="M14 22c-1-1.5-6-6-6-9a4 4 0 018 0c0 3-5 7.5-6 9z" fill="#fff" stroke="#fff" stroke-width="0.5"/><circle cx="11" cy="11" r="1.5" fill="#ff4d4f"/><circle cx="17" cy="11" r="1.5" fill="#ff4d4f"/></svg>
+                <span>数字关爱平台</span>
+            </div>
+            <span class="top-nav-collapse" id="toggleSidebar">≡</span>
+        </div>
+        <div class="top-nav-right">
+            <span class="help-link">帮助中心</span>
+            <div class="nav-bell">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+            </div>
+            <span class="nav-bell-count">(0/0)</span>
+            <div class="nav-avatar">
+                <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="12" r="5" fill="#fff"/><ellipse cx="16" cy="26" rx="9" ry="6" fill="#fff"/></svg>
+            </div>
+            <div class="nav-user-info">
+                <span class="team-label">团队</span>
+                <span class="team-name">数字关爱平台测试1</span>
+                <span class="role-label">团队管理员…</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 左侧菜单 -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="greeting">开始干活</div>
+            <div class="sidebar-avatar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#c9cdd4" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+            </div>
+        </div>
+
+        <!-- 团队管理 -->
+        <div class="menu-group">
+            <div class="menu-group-title">团队管理</div>
+            <div class="menu-item" data-page="overview">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1"/></svg>
+                <span>团队概览</span>
+            </div>
+            <div class="menu-item active" data-page="info" id="menuInfo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                <span>团队信息</span>
+                <div class="dot-badge" id="sbDot"><div class="dot-r"></div><span class="dot-text">待完善</span></div>
+            </div>
+            <div class="menu-item" data-page="members">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                <span>团队成员</span>
+            </div>
+            <div class="menu-item" data-page="merchant-account">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                <span>商户号</span>
+                <span class="alert-dot"></span>
+                <span class="alert-text">配置需更新</span>
+            </div>
+        </div>
+
+        <!-- 商家管理 -->
+        <div class="menu-group">
+            <div class="menu-group-title">商家管理</div>
+            <div class="menu-item" data-page="merchant-list">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+                <span>商家列表</span>
+            </div>
+            <div class="menu-item" data-page="merchant-audit">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span>商家审核</span>
+            </div>
+        </div>
+
+        <!-- 资源包管理 -->
+        <div class="menu-group">
+            <div class="menu-group-title">资源包管理</div>
+            <div class="menu-item" data-page="create-resource">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                <span>创建资源包</span>
+            </div>
+            <div class="menu-item" data-page="resource-list">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                <span>资源包列表</span>
+            </div>
+        </div>
+
+        <!-- 活动管理 -->
+        <div class="menu-group">
+            <div class="menu-group-title">活动管理</div>
+            <div class="menu-item" data-page="create-activity">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v8m-4-4h8"/></svg>
+                <span>发起新活动</span>
+            </div>
+            <div class="menu-item" data-page="resource-activity">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+                <span>新建资源包活动</span>
+            </div>
+            <div class="menu-item" data-page="my-activities">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                <span>发起的活动</span>
+            </div>
+            <div class="menu-item" data-page="collab-activities">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 20h5v-2a3 3 0 00-3-3h-1m-7 5H2v-2a3 3 0 013-3h1m4 0a4 4 0 100-8 4 4 0 000 8z"/></svg>
+                <span>协作的活动</span>
+            </div>
+        </div>
+
+        <!-- 申领表单管理 -->
+        <div class="menu-group">
+            <div class="menu-group-title">申领表单管理</div>
+            <div class="menu-item" data-page="cooperation-intent">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                <span>合作意向申请</span>
+                <span class="badge">2</span>
+            </div>
+        </div>
+
+        <div class="sidebar-footer">数字关爱平台 1.17.1.0</div>
+    </div>
+
+    <!-- 主内容区 -->
+    <div class="main-content" id="mainContent">
+        <!-- 页面内容由 JS 动态渲染 -->
+    </div>
+
+    <!-- 站内信弹窗 -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box">
+            <div class="m-head">
+                <div class="m-ico" style="background:#E6F7FF;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1890FF" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 16v-4m0-4h.01"/></svg></div>
+                <div>
+                    <div class="m-title">您的关爱主页已上线</div>
+                    <div class="m-sub">系统已根据您的现有数据自动生成关爱主页</div>
+                </div>
+                <div class="m-x" id="modalClose">✕</div>
+            </div>
+            <div class="m-body">
+                <div class="m-intro">
+                    尊敬的机构管理员，您好！<br>
+                    您的机构关爱主页已自动生成并上线。为了让主页展示效果更完整，建议您完善以下信息：
+                </div>
+                <div class="m-list" id="modalMissingItems"></div>
+            </div>
+            <div class="m-foot">
+                <button class="btn-d" id="modalLater">稍后再说</button>
+                <button class="btn-d" onclick="openPreview()" style="color:#4e6ef2;border-color:#4e6ef2;">预览主页</button>
+                <button class="btn-p" id="modalGo">前往完善信息</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 关爱主页预览弹窗 -->
+    <div class="preview-overlay hidden" id="previewOverlay">
+        <div class="preview-box">
+            <div class="preview-header">
+                <span class="preview-header-title">关爱主页预览</span>
+                <span class="preview-header-close" id="previewClose">✕</span>
+            </div>
+            <div class="preview-body">
+                <div class="preview-phone">
+                    <div class="phone-frame">
+                        <div class="phone-status-bar">关爱主页</div>
+                        <div class="phone-content" id="previewContent"></div>
+                        <div class="phone-bottom-bar">
+                            <span class="phone-bottom-btn">合作意向</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="preview-footer">
+                <div class="preview-footer-hint">此为预览效果，完善更多信息后展示将更丰富</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ====== 数据模型 ======
+        const formData = {
+            name: '数字关爱平台测试1',
+            shortName: '-',
+            logo: null,
+            intro: '',
+            orgType: '-',
+            subOrgType: '-',
+            rating: '无',
+            foundDate: '-',
+            socialOrgCert: '-',
+            creditCode: '51130630MJ0A122121',
+            teamAddress: '-',
+            certExpiry: '-',
+            bizScope: '-',
+            headerImage: null,
+            slogan: '',
+            responsibleName: 'y****',
+            responsiblePhone: '1',
+            responsibleEmail: '1',
+        };
+
+        let currentPage = 'info';
+        let bannerClosed = !!sessionStorage.getItem('bannerClosed');
+        let modalDismissed = localStorage.getItem('homepage_modal_dismissed');
+        let activeHighlight = false; // 点击"前往填写"后激活高亮
+
+        // 团队信息红点：首次生成主页时记录时间戳，一个月后自动隐藏
+        function initRedDotTimestamp() {
+            if (!localStorage.getItem('homepage_reddot_start')) {
+                localStorage.setItem('homepage_reddot_start', Date.now().toString());
+            }
+        }
+        function shouldShowRedDot() {
+            const start = localStorage.getItem('homepage_reddot_start');
+            if (!start) return false;
+            const elapsed = Date.now() - parseInt(start);
+            const oneMonth = 30 * 24 * 60 * 60 * 1000;
+            return elapsed < oneMonth;
+        }
+        initRedDotTimestamp();
+
+        // ====== 关爱主页字段清单（仅需完善：关爱主张、机构头图）======
+        const FIELDS = {
+            banner:  '机构头图',
+            slogan:  '关爱主张',
+        };
+        const FIELD_ICONS = { banner: '', slogan: '' };
+        const done = {};
+
+        function pending() { return Object.keys(FIELDS).filter(k => !done[k]); }
+
+        // 生成标签 HTML：已完善 / 待填写（高亮模式）/ 待完善（默认）——仅对需完善字段显示
+        function tagHtml(key) {
+            if (!(key in FIELDS)) return '';
+            if (done[key]) return '<span class="tag-done">已完善</span>';
+            if (activeHighlight) return '<span class="tag-wait">待填写</span>';
+            return '<span class="tag-pend">待完善</span>';
+        }
+
+        function getHomepageFields() {
+            const fields = [
+                { key: 'banner', name: '机构头图', type: 'new' },
+                { key: 'slogan', name: '关爱主张', type: 'new' },
+            ];
+            return fields.map(f => ({ ...f, filled: !!done[f.key] }));
+        }
+
+        function getMissingFields() {
+            return getHomepageFields().filter(f => !f.filled).map(f => f.name);
+        }
+
+        // ====== 标记完善 ======
+        function markDone(key) {
+            done[key] = true;
+            render();
+            updateBanner();
+            updateSidebarDot();
+        }
+
+        // ====== 关爱主张 - 编辑交互 ======
+        let sloganText = '';
+
+        function editSlogan() {
+            // 已填写状态下点修改，清除done让输入框出现
+            done.slogan = false;
+            render();
+            focusSloganInput();
+        }
+
+        function focusSloganInput() {
+            setTimeout(() => {
+                const input = document.getElementById('sloganInput');
+                if (input) {
+                    input.focus();
+                    input.addEventListener('input', () => {
+                        const cnt = document.getElementById('sloganCount');
+                        if (cnt) cnt.textContent = input.value.length + '/30';
+                    });
+                }
+            }, 50);
+        }
+
+        function confirmSlogan() {
+            const input = document.getElementById('sloganInput');
+            if (!input) return;
+            const val = input.value.trim();
+            if (!val) { input.focus(); input.style.borderColor = '#ff4d4f'; return; }
+            sloganText = val;
+            done.slogan = true;
+            render();
+            updateBanner();
+            updateSidebarDot();
+            checkAllDone();
+        }
+
+        // ====== 机构头图 - 上传交互 ======
+        let bannerPreviewUrl = '';
+
+        function triggerBannerUpload() {
+            // 如果还没渲染 file input（已上传状态下重新上传），动态创建
+            let fileInput = document.getElementById('bannerFileInput');
+            if (!fileInput) {
+                fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.accept = 'image/*';
+                fileInput.style.display = 'none';
+                fileInput.id = 'bannerFileInput';
+                fileInput.onchange = function() { handleBannerUpload(this); };
+                document.body.appendChild(fileInput);
+            }
+            fileInput.click();
+        }
+
+        function handleBannerUpload(input) {
+            if (!input.files || !input.files[0]) return;
+            const file = input.files[0];
+            // 简单校验
+            if (!file.type.startsWith('image/')) { alert('请选择图片文件'); return; }
+            if (file.size > 5 * 1024 * 1024) { alert('图片大小不超过5MB'); return; }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                bannerPreviewUrl = e.target.result;
+                done.banner = true;
+                render();
+                updateBanner();
+                updateSidebarDot();
+                checkAllDone();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeBanner() {
+            bannerPreviewUrl = '';
+            done.banner = false;
+            render();
+            updateBanner();
+            updateSidebarDot();
+        }
+
+        function fillAll() {
+            Object.keys(FIELDS).forEach(k => { done[k] = true; });
+            render();
+            updateBanner();
+            updateSidebarDot();
+        }
+
+        // ====== Banner 横幅 ======
+        function closeBanner() {
+            bannerClosed = true;
+            sessionStorage.setItem('bannerClosed', '1');
+            const el = document.getElementById('noticeBanner');
+            if (el) el.classList.add('hidden');
+        }
+
+        function updateBanner() {
+            const p = pending();
+            const banner = document.getElementById('noticeBanner');
+            if (!banner) return;
+            if (p.length === 0) {
+                banner.classList.add('hidden');
+                return;
+            }
+            if (bannerClosed) {
+                banner.classList.add('hidden');
+                return;
+            }
+            banner.classList.remove('hidden');
+        }
+
+        function updateSidebarDot() {
+            const sbDot = document.getElementById('sbDot');
+            if (!sbDot) return;
+            const p = pending();
+            if (p.length === 0 || !shouldShowRedDot()) {
+                sbDot.style.display = 'none';
+            } else {
+                sbDot.style.display = 'flex';
+            }
+        }
+
+        function scrollToPending() {
+            const p = pending();
+            if (p.length === 0) return;
+            activeHighlight = true;
+            render();
+            setTimeout(() => {
+                const first = document.getElementById('fp-' + p[0]);
+                if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // 自动聚焦关爱主张输入框
+                focusSloganInput();
+            }, 50);
+        }
+
+        // ====== 通知条渲染 ======
+        function renderNotificationBanner() {
+            const p = pending();
+            if (p.length === 0) return '';
+            return `
+                <div class="notice-banner ${bannerClosed ? 'hidden' : ''}" id="noticeBanner">
+                    <div class="nb-head">
+                        <div class="nb-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1677FF" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 16v-4m0-4h.01"/></svg></div>
+                        <div class="nb-title">完善更多信息，提升关爱主页展示效果</div>
+                    </div>
+                    <div class="nb-body">
+                        <div class="nb-desc">
+                            1、填写以下信息后，您的关爱主页将获得更丰富的展示效果，帮助更多爱心商户了解您的公益成效。<br>
+                            2、如信息有更新，也可随时返回此处重新编辑。
+                        </div>
+                        <span class="nb-link" onclick="scrollToPending()">去完善 →</span>
+                        <span class="nb-link" onclick="openPreview()" style="margin-left:16px;color:#86909c;">预览主页</span>
+                    </div>
+                    <div class="nb-close" onclick="closeBanner()" title="关闭后下次进入仍会提示">✕</div>
+                </div>
+            `;
+        }
+
+        // ====== 团队信息页 ======
+        function renderTeamInfoPage() {
+            return `
+                <div class="page-header">
+                    <div class="breadcrumb">团队管理 > 团队信息</div>
+                    <div class="page-title-row">
+                        <h2>团队信息</h2>
+                    </div>
+                </div>
+
+                ${renderNotificationBanner()}
+
+                <!-- ===== 基础信息 ===== -->
+                <div class="section-card">
+                    <div class="section-title">基础信息</div>
+                    <div class="field-grid">
+                        <div class="field-item">
+                            <div class="field-label">团队全称</div>
+                            <div class="field-value">${formData.name}</div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">团队简称</div>
+                            <div class="field-value empty">${formData.shortName}</div>
+                        </div>
+
+                        <!-- 团队 logo -->
+                        <div class="field-item" id="fp-logo">
+                            <div class="field-label">团队 logo</div>
+                            <div class="field-value"><span class="fill-hint">–</span></div>
+                        </div>
+
+                        <!-- 团队简介 -->
+                        <div class="field-item" id="fp-intro">
+                            <div class="field-label">团队简介</div>
+                            <div class="field-value"><span class="fill-hint">–</span></div>
+                        </div>
+
+                        <div class="field-item">
+                            <div class="field-label">组织类型</div>
+                            <div class="field-value empty">${formData.orgType}</div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">细分组织类型</div>
+                            <div class="field-value empty">${formData.subOrgType}</div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">社会组织评估等级</div>
+                            <div class="field-value empty">${formData.rating}</div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">成立日期</div>
+                            <div class="field-value empty">${formData.foundDate}</div>
+                        </div>
+
+                        <!-- ★ 机构头图 — 新增字段，嵌入基础信息末尾 -->
+                        <div class="field-item ${!done.banner && activeHighlight ? 'hl' : ''}" id="fp-banner">
+                            <div class="field-label">
+                                机构头图
+                                ${tagHtml('banner')}
+                            </div>
+                            <div class="field-value">
+                                ${done.banner
+                                    ? `<div class="upload-row">
+                                        <img class="upload-preview-img" src="${bannerPreviewUrl}" alt="机构头图">
+                                        ${activeHighlight ? `<div><div class="upload-actions"><span class="inline-btn inline-btn-cancel" onclick="removeBanner()">删除</span><span class="inline-btn inline-btn-ok" onclick="triggerBannerUpload()">重新上传</span></div></div>` : ''}
+                                       </div>`
+                                    : activeHighlight
+                                        ? `<div class="upload-area" onclick="triggerBannerUpload()">
+                                            <span class="upload-area-icon">＋</span>
+                                            <span class="upload-area-text">点击上传封面图</span>
+                                           </div>
+                                           <div class="hint-sub">关爱主页顶部展示用，建议 750×280px</div>
+                                           <input type="file" id="bannerFileInput" accept="image/*" style="display:none" onchange="handleBannerUpload(this)">`
+                                        : '<span class="fill-hint">–</span>'
+                                }
+                            </div>
+                        </div>
+
+                        <!-- ★ 关爱主张 — 新增字段 -->
+                        <div class="field-item ${!done.slogan && activeHighlight ? 'hl' : ''}" id="fp-slogan">
+                            <div class="field-label">
+                                关爱主张
+                                ${tagHtml('slogan')}
+                            </div>
+                            <div class="field-value">
+                                ${done.slogan
+                                    ? `<span>${sloganText}</span>${activeHighlight ? `<span class="fill-link" onclick="editSlogan()" style="margin-left:8px;">修改</span>` : ''}`
+                                    : activeHighlight
+                                        ? `<div class="inline-input-row">
+                                            <input class="inline-input" id="sloganInput" type="text" maxlength="30" placeholder="例如：专注儿童关爱，为每个孩子点亮希望" value="${sloganText}">
+                                            <span class="inline-btn inline-btn-ok" onclick="confirmSlogan()">确定</span>
+                                           </div>
+                                           <div class="hint-sub">关爱主张是您机构的公益理念或使命宣言，将展示在关爱主页头部，帮助爱心商户快速了解您的公益方向。<br><span class="char-count" id="sloganCount">${sloganText.length}/30</span></div>`
+                                        : '<span class="fill-hint">–</span>'
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== 证书信息 ===== -->
+                <div class="section-card">
+                    <div class="section-title">证书信息</div>
+                    <div class="field-grid">
+                        <div class="field-item">
+                            <div class="field-label">社会组织法人登记证书</div>
+                            <div class="field-value empty">${formData.socialOrgCert}</div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">证书统一社会信用代码</div>
+                            <div class="field-value">${formData.creditCode}</div>
+                        </div>
+                        <!-- 团队住所 -->
+                        <div class="field-item" id="fp-addr">
+                            <div class="field-label">团队住所</div>
+                            <div class="field-value"><span class="fill-hint">–</span></div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">证书有效期</div>
+                            <div class="field-value empty">${formData.certExpiry}</div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">业务范围</div>
+                            <div class="field-value empty">${formData.bizScope}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== 法人信息 ===== -->
+                <div class="section-card">
+                    <div class="section-title">法人信息 <span class="eye-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9cdd4" stroke-width="1.5"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                    </span></div>
+                    <div class="field-grid">
+                        <div class="field-item">
+                            <div class="field-label">法人代表人姓名</div>
+                            <div class="field-value empty">-</div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">法人个人手机号</div>
+                            <div class="field-value empty">-</div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">法人身份证号</div>
+                            <div class="field-value empty">-</div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">法人身份证有效期</div>
+                            <div class="field-value empty">-</div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">团队总人数</div>
+                            <div class="field-value">0 人</div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">团队全职人数</div>
+                            <div class="field-value">0 人</div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">团队兼职人数</div>
+                            <div class="field-value">0 人</div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">团队志愿者人数</div>
+                            <div class="field-value">0 人</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== 负责人信息 ===== -->
+                <div class="section-card">
+                    <div class="section-title">负责人信息 <span class="eye-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9cdd4" stroke-width="1.5"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                    </span></div>
+                    <div class="field-grid">
+                        <div class="field-item">
+                            <div class="field-label">平台负责人姓名</div>
+                            <div class="field-value">${formData.responsibleName}</div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">平台负责人手机号</div>
+                            <div class="field-value">${formData.responsiblePhone}</div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">平台负责人邮箱</div>
+                            <div class="field-value">${formData.responsibleEmail}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ====== 合作意向页 ======
+        function renderCooperationPage() {
+            const intents = [
+                { company: '深圳市优品生活超市', contact: '王经理', phone: '138****5678', type: ['捐赠物资', '提供服务'], time: '2026-02-28 14:23', status: 'pending' },
+                { company: '广州百味餐饮连锁', contact: '李总', phone: '139****1234', type: ['资金资助'], time: '2026-02-27 09:15', status: 'pending' },
+                { company: '东莞爱心药房', contact: '张经理', phone: '136****9012', type: ['捐赠物资'], time: '2026-02-25 16:40', status: 'contacted' },
+            ];
+
+            return `
+                <div class="page-header">
+                    <div class="breadcrumb">申领表单管理 > 合作意向申请</div>
+                    <div class="page-title-row">
+                        <h2>合作意向申请</h2>
+                        <span style="background:#f7f8fa;color:#86909c;font-size:12px;font-weight:600;padding:4px 12px;border-radius:10px;">2条待处理</span>
+                    </div>
+                </div>
+                <p style="font-size:13px;color:#86909c;margin-bottom:20px;">来自关爱主页的商家合作意向表单</p>
+
+                <div class="section-card" style="padding:0;overflow:hidden;">
+                    <table class="intent-table">
+                        <thead>
+                            <tr>
+                                <th>企业/商户名称</th>
+                                <th>联系人</th>
+                                <th>联系电话</th>
+                                <th>合作意向</th>
+                                <th>提交时间</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${intents.map(i => `
+                                <tr>
+                                    <td style="font-weight:500;color:#1d2129;">${i.company}</td>
+                                    <td>${i.contact}</td>
+                                    <td>${i.phone}</td>
+                                    <td>${i.type.map(t => `<span class="intent-type-tag">${t}</span>`).join('')}</td>
+                                    <td style="font-size:12px;color:#86909c;">${i.time}</td>
+                                    <td><span class="intent-status ${i.status}">${i.status === 'pending' ? '待联系' : '已联系'}</span></td>
+                                    <td><button class="btn-mark">${i.status === 'pending' ? '标记已联系' : '查看详情'}</button></td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        // ====== 空页面 ======
+        function renderEmptyPage(title) {
+            return `
+                <div class="page-header">
+                    <h2>${title}</h2>
+                </div>
+                <div class="empty-page">
+                    <div class="empty-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#e5e6eb" stroke-width="1"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M8 7h8M8 11h5"/></svg>
+                    </div>
+                    <p>此模块暂未开放演示</p>
+                </div>
+            `;
+        }
+
+        // ====== 主渲染 ======
+        function render() {
+            const main = document.getElementById('mainContent');
+
+            const pageMap = {
+                'info': renderTeamInfoPage,
+                'cooperation-intent': renderCooperationPage,
+            };
+
+            const titleMap = {
+                'overview': '团队概览',
+                'members': '团队成员',
+                'merchant-account': '商户号',
+                'merchant-list': '商家列表',
+                'merchant-audit': '商家审核',
+                'create-resource': '创建资源包',
+                'resource-list': '资源包列表',
+                'create-activity': '发起新活动',
+                'resource-activity': '新建资源包活动',
+                'my-activities': '发起的活动',
+                'collab-activities': '协作的活动',
+            };
+
+            if (pageMap[currentPage]) {
+                main.innerHTML = pageMap[currentPage]();
+            } else {
+                main.innerHTML = renderEmptyPage(titleMap[currentPage] || '页面');
+            }
+
+            updateSidebarDot();
+        }
+
+        // ====== 检查是否全部完善，自动退出编辑模式 ======
+        function checkAllDone() {
+            if (pending().length === 0) {
+                activeHighlight = false;
+                render();
+            }
+        }
+
+        // ====== 菜单切换 ======
+        document.getElementById('sidebar').addEventListener('click', function(e) {
+            const item = e.target.closest('.menu-item');
+            if (!item) return;
+            const page = item.getAttribute('data-page');
+            if (!page) return;
+            
+            currentPage = page;
+            
+            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+            item.classList.add('active');
+            
+            render();
+        });
+
+        // ====== 弹窗逻辑 ======
+        function renderModalMissingItems() {
+            // 弹窗只展示 关爱主张、机构头图 两个字段
+            const showKeys = ['slogan', 'banner'];
+            const missingFields = getHomepageFields().filter(f => !f.filled && showKeys.includes(f.key));
+            const container = document.getElementById('modalMissingItems');
+            container.innerHTML = missingFields.map(f => `
+                <div class="m-row">
+                    <span class="m-row-name">${f.name}</span>
+                    <span class="m-row-tag">待完善</span>
+                </div>
+            `).join('');
+        }
+
+        function showModal() { document.getElementById('modalOverlay').classList.remove('hidden'); }
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.add('hidden');
+            localStorage.setItem('homepage_modal_dismissed', '1');
+        }
+        function goFill() {
+            closeModal();
+            setTimeout(scrollToPending, 250);
+        }
+
+        document.getElementById('modalClose').addEventListener('click', closeModal);
+        document.getElementById('modalLater').addEventListener('click', closeModal);
+        document.getElementById('modalGo').addEventListener('click', goFill);
+
+        // ====== 关爱主页预览 ======
+        function openPreview() {
+            const el = document.getElementById('previewOverlay');
+            el.classList.remove('hidden');
+            renderPreviewContent();
+        }
+        function closePreview() {
+            document.getElementById('previewOverlay').classList.add('hidden');
+        }
+        function renderPreviewContent() {
+            const container = document.getElementById('previewContent');
+            const hasBanner = done.banner;
+            const hasLogo = done.logo;
+            const hasSlogan = done.slogan;
+            const hasIntro = done.intro;
+            const hasAddr = done.addr;
+
+            container.innerHTML = `
+                <div class="hp-banner">
+                    ${hasBanner
+                        ? ''
+                        : '<div class="hp-banner-placeholder">暂未上传机构头图</div>'
+                    }
+                </div>
+                <div class="hp-org-row">
+                    <div class="hp-org-logo ${hasLogo ? 'has-logo' : ''}">
+                        ${hasLogo ? formData.name.charAt(0) : 'Logo'}
+                    </div>
+                    <div class="hp-org-name">${formData.name}</div>
+                </div>
+                <div class="hp-slogan ${hasSlogan ? '' : 'empty'}">
+                    ${hasSlogan ? sloganText : '暂未填写关爱主张'}
+                </div>
+                <div class="hp-divider"></div>
+                <div class="hp-section">
+                    <div class="hp-section-title">机构简介</div>
+                    <div class="hp-info-row">
+                        <span class="hp-info-val ${hasIntro ? '' : 'empty'}">${hasIntro ? '已填写团队简介内容...' : '暂未填写机构简介'}</span>
+                    </div>
+                </div>
+                <div class="hp-divider"></div>
+                <div class="hp-section">
+                    <div class="hp-section-title">联系信息</div>
+                    <div class="hp-info-row">
+                        <span class="hp-info-label">地址</span>
+                        <span class="hp-info-val ${hasAddr ? '' : 'empty'}">${hasAddr ? '广州市天河区数字化公益大厦12层' : '暂未填写'}</span>
+                    </div>
+                </div>
+                <div class="hp-divider"></div>
+                <div class="hp-tab-bar">
+                    <span class="hp-tab active">关爱活动</span>
+                    <span class="hp-tab">资源包</span>
+                    <span class="hp-tab">合作商家</span>
+                </div>
+                <div class="hp-empty-list">暂无活动数据</div>
+            `;
+        }
+
+        document.getElementById('previewClose').addEventListener('click', closePreview);
+        document.getElementById('previewOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closePreview();
+        });
+
+        // ====== 初始化 ======
+        renderModalMissingItems();
+        render();
+    </script>
+</body>
+</html>
