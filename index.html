@@ -70,30 +70,6 @@
         .nb-close { position: absolute; top: 14px; right: 14px; font-size: 16px; color: #8C8C8C; cursor: pointer; line-height: 1; transition: color .12s; }
         .nb-close:hover { color: #262626; }
 
-        /* ====== 站内信弹窗 ====== */
-        .modal-overlay { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.42); display: flex; align-items: center; justify-content: center; }
-        .modal-overlay.hidden { display: none; }
-        .modal-box { background: #fff; border-radius: 8px; width: 480px; box-shadow: 0 8px 40px rgba(0,0,0,0.18); overflow: hidden; animation: mIn .2s ease; }
-        @keyframes mIn { from{opacity:0;transform:translateY(-10px) scale(.97)} to{opacity:1;transform:none} }
-        .m-head { padding: 18px 24px 14px; border-bottom: 1px solid #F0F0F0; display: flex; align-items: flex-start; gap: 12px; }
-        .m-ico { width: 36px; height: 36px; border-radius: 50%; background: #FFF1F0; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-        .m-title { font-size: 15px; font-weight: 600; color: #141414; margin-bottom: 2px; }
-        .m-sub { font-size: 12px; color: #8C8C8C; }
-        .m-x { margin-left: auto; font-size: 16px; color: #BFBFBF; cursor: pointer; padding: 2px; transition: color .12s; }
-        .m-x:hover { color: #262626; }
-        .m-body { padding: 16px 24px; }
-        .m-intro { font-size: 13px; color: #595959; line-height: 1.75; padding: 10px 14px; background: #fafafa; border-radius: 4px; margin-bottom: 14px; }
-        .m-list { display: flex; flex-direction: column; gap: 6px; }
-        .m-row { display: flex; align-items: center; gap: 10px; padding: 9px 12px; background: #fafafa; border-radius: 5px; border: 1px solid #F0F0F0; }
-        .m-row-ico { font-size: 14px; flex-shrink: 0; display: none; }
-        .m-row-name { font-size: 13px; color: #262626; font-weight: 500; flex: 1; }
-        .m-row-tag { font-size: 11px; font-weight: 500; padding: 1px 7px; border-radius: 3px; background: #FEF0ED; color: #D4604A; border: 1px solid #F3C0B3; }
-        .m-foot { padding: 12px 24px 18px; border-top: 1px solid #F0F0F0; display: flex; gap: 8px; justify-content: flex-end; }
-        .btn-p { padding: 5px 18px; background: #E8392A; color: #fff; border: none; border-radius: 5px; font-size: 13px; font-weight: 500; cursor: pointer; transition: opacity .12s; font-family: inherit; }
-        .btn-p:hover { opacity: .88; }
-        .btn-d { padding: 5px 14px; background: #fff; color: #595959; border: 1px solid #d9d9d9; border-radius: 5px; font-size: 13px; cursor: pointer; transition: border-color .12s; font-family: inherit; }
-        .btn-d:hover { border-color: #8C8C8C; }
-
         /* ====== 关爱主页预览弹窗 ====== */
         .preview-overlay { position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; }
         .preview-overlay.hidden { display: none; }
@@ -202,6 +178,54 @@
         .page-header h2 { font-size: 18px; font-weight: 700; color: #1d2129; }
 
 
+        /* ====== 团队配置表单（沿用"发起新活动"风格） ====== */
+        .form-card { background: #fff; border: 1px solid #e5e6eb; border-radius: 8px; padding: 28px 32px 32px; margin-bottom: 20px; }
+        .form-section-title { font-size: 16px; font-weight: 700; color: #1d2129; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid #f2f3f5; }
+        .form-row { display: flex; align-items: flex-start; margin-bottom: 24px; }
+        .form-row:last-child { margin-bottom: 0; }
+        .form-label { width: 100px; flex-shrink: 0; font-size: 14px; color: #4e5969; padding-top: 7px; text-align: right; padding-right: 16px; }
+        .form-label .required { color: #ff4d4f; margin-right: 2px; }
+        .form-control { flex: 1; max-width: 520px; }
+        .form-input { width: 100%; padding: 7px 12px; font-size: 14px; color: #1d2129; border: 1px solid #d9d9d9; border-radius: 4px; outline: none; transition: border-color .2s; font-family: inherit; }
+        .form-input:focus { border-color: #4e6ef2; box-shadow: 0 0 0 2px rgba(78,110,242,0.1); }
+        .form-input::placeholder { color: #c9cdd4; }
+        .form-input-count { text-align: right; font-size: 12px; color: #c9cdd4; margin-top: 4px; }
+        .form-hint { font-size: 12px; color: #86909c; margin-top: 6px; line-height: 1.6; }
+        .form-upload-box { width: 160px; height: 160px; border: 1px dashed #d9d9d9; border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: border-color .2s; background: #fafafa; }
+        .form-upload-box:hover { border-color: #4e6ef2; }
+        .form-upload-icon { font-size: 28px; color: #c9cdd4; line-height: 1; }
+        .form-upload-text { font-size: 12px; color: #86909c; margin-top: 6px; }
+        .form-upload-preview { width: 160px; height: 160px; border-radius: 6px; object-fit: cover; border: 1px solid #e5e6eb; }
+        .form-upload-preview-wrap { position: relative; width: 160px; height: 160px; border-radius: 6px; overflow: hidden; display: inline-block; }
+        .form-upload-preview-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .form-upload-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; gap: 16px; opacity: 0; transition: opacity .2s; cursor: default; }
+        .form-upload-preview-wrap:hover .form-upload-overlay { opacity: 1; }
+        .form-upload-overlay-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; font-size: 18px; transition: transform .15s; background: none; border: none; padding: 0; }
+        .form-upload-overlay-btn:hover { transform: scale(1.15); }
+        .form-upload-overlay-divider { width: 1px; height: 20px; background: rgba(255,255,255,0.4); }
+        .form-upload-actions { display: flex; gap: 8px; margin-top: 8px; }
+        .form-upload-btn { font-size: 12px; color: #4e6ef2; cursor: pointer; background: none; border: none; padding: 0; }
+        .form-upload-btn:hover { text-decoration: underline; }
+        .form-upload-btn.danger { color: #ff4d4f; }
+        /* 校验错误 */
+        .form-error-text { font-size: 12px; color: #ff4d4f; margin-top: 4px; display: none; }
+        .form-error-text.visible { display: block; }
+        .form-input.has-error { border-color: #ff4d4f !important; }
+        .form-input.has-error:focus { box-shadow: 0 0 0 2px rgba(255,77,79,0.1); }
+        .form-upload-box.has-error { border-color: #ff4d4f !important; }
+        /* 全局 toast */
+        .global-toast { position: fixed; top: 24px; left: 50%; transform: translateX(-50%) translateY(-20px); background: #fff; border: 1px solid #e5e6eb; border-radius: 8px; padding: 12px 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); display: flex; align-items: center; gap: 10px; z-index: 9999; opacity: 0; transition: opacity .25s, transform .25s; pointer-events: none; font-size: 14px; color: #1d2129; }
+        .global-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .global-toast .toast-icon { width: 20px; height: 20px; border-radius: 50%; background: #ff4d4f; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+        .form-footer { display: flex; gap: 10px; padding-top: 8px; margin-top: 8px; }
+        .form-btn-primary { padding: 8px 28px; background: #4e6ef2; color: #fff; border: none; border-radius: 4px; font-size: 14px; font-weight: 500; cursor: pointer; transition: background .15s; font-family: inherit; }
+        .form-btn-primary:hover { background: #3d5bd9; }
+        .form-btn-default { padding: 8px 28px; background: #fff; color: #4e5969; border: 1px solid #d9d9d9; border-radius: 4px; font-size: 14px; cursor: pointer; transition: border-color .15s; font-family: inherit; }
+        .form-btn-default:hover { border-color: #86909c; }
+        /* 展示态 */
+        .form-display-value { font-size: 14px; color: #1d2129; padding-top: 7px; line-height: 1.6; }
+        .form-display-value.empty { color: #c9cdd4; }
+
         /* ====== 空页面占位 ====== */
         .empty-page { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; color: #c9cdd4; }
         .empty-page .empty-icon { font-size: 40px; margin-bottom: 12px; }
@@ -254,11 +278,15 @@
             <div class="menu-item active" data-page="info" id="menuInfo">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                 <span>团队信息</span>
-                <div class="dot-badge" id="sbDot"><div class="dot-r"></div><span class="dot-text">待完善</span></div>
             </div>
             <div class="menu-item" data-page="members">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                 <span>团队成员</span>
+            </div>
+            <div class="menu-item" data-page="team-config" id="menuConfig">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.573-1.066z"/><circle cx="12" cy="12" r="3"/></svg>
+                <span>团队配置</span>
+                <div class="dot-badge" id="sbDot"><div class="dot-r"></div><span class="dot-text">待完善</span></div>
             </div>
             <div class="menu-item" data-page="merchant-account">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
@@ -333,32 +361,6 @@
         <!-- 页面内容由 JS 动态渲染 -->
     </div>
 
-    <!-- 站内信弹窗 -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-box">
-            <div class="m-head">
-                <div class="m-ico" style="background:#E6F7FF;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1890FF" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 16v-4m0-4h.01"/></svg></div>
-                <div>
-                    <div class="m-title">您的关爱主页已上线</div>
-                    <div class="m-sub">系统已根据您的现有数据自动生成关爱主页</div>
-                </div>
-                <div class="m-x" id="modalClose">✕</div>
-            </div>
-            <div class="m-body">
-                <div class="m-intro">
-                    尊敬的机构管理员，您好！<br>
-                    您的机构关爱主页已自动生成并上线。为了让主页展示效果更完整，建议您完善以下信息：
-                </div>
-                <div class="m-list" id="modalMissingItems"></div>
-            </div>
-            <div class="m-foot">
-                <button class="btn-d" id="modalLater">稍后再说</button>
-                <button class="btn-d" onclick="openPreview()" style="color:#4e6ef2;border-color:#4e6ef2;">预览主页</button>
-                <button class="btn-p" id="modalGo">前往完善信息</button>
-            </div>
-        </div>
-    </div>
-
     <!-- 关爱主页预览弹窗 -->
     <div class="preview-overlay hidden" id="previewOverlay">
         <div class="preview-box">
@@ -408,8 +410,6 @@
 
         let currentPage = 'info';
         let bannerClosed = !!sessionStorage.getItem('bannerClosed');
-        let modalDismissed = localStorage.getItem('homepage_modal_dismissed');
-        let activeHighlight = false; // 点击"前往填写"后激活高亮
 
         // 团队信息红点：首次生成主页时记录时间戳，一个月后自动隐藏
         function initRedDotTimestamp() {
@@ -440,7 +440,6 @@
         function tagHtml(key) {
             if (!(key in FIELDS)) return '';
             if (done[key]) return '<span class="tag-done">已完善</span>';
-            if (activeHighlight) return '<span class="tag-wait">待填写</span>';
             return '<span class="tag-pend">待完善</span>';
         }
 
@@ -497,7 +496,6 @@
             render();
             updateBanner();
             updateSidebarDot();
-            checkAllDone();
         }
 
         // ====== 机构头图 - 上传交互 ======
@@ -531,7 +529,6 @@
                 render();
                 updateBanner();
                 updateSidebarDot();
-                checkAllDone();
             };
             reader.readAsDataURL(file);
         }
@@ -585,40 +582,248 @@
             }
         }
 
-        function scrollToPending() {
+        // ====== 团队配置页 - 编辑态控制 ======
+        let configEditing = true; // 默认进入编辑态
+
+        function renderTeamConfigPage() {
             const p = pending();
-            if (p.length === 0) return;
-            activeHighlight = true;
-            render();
-            setTimeout(() => {
-                const first = document.getElementById('fp-' + p[0]);
-                if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                // 自动聚焦关爱主张输入框
-                focusSloganInput();
-            }, 50);
+            const showBanner = p.length > 0 && !bannerClosed;
+
+            if (configEditing) {
+                return renderConfigEditMode(showBanner);
+            } else {
+                return renderConfigViewMode(showBanner);
+            }
         }
 
-        // ====== 通知条渲染 ======
-        function renderNotificationBanner() {
-            const p = pending();
-            if (p.length === 0) return '';
+        function renderConfigEditMode(showBanner) {
             return `
-                <div class="notice-banner ${bannerClosed ? 'hidden' : ''}" id="noticeBanner">
+                <div class="page-header">
+                    <div class="breadcrumb">团队管理 > 团队配置</div>
+                    <div class="page-title-row">
+                        <h2>团队配置</h2>
+                    </div>
+                </div>
+
+                ${showBanner ? renderConfigBanner() : ''}
+
+                <div class="form-card">
+                    <div class="form-section-title">关爱主页信息</div>
+
+                    <!-- 机构头图 -->
+                    <div class="form-row">
+                        <div class="form-label"><span class="required">*</span>机构头图</div>
+                        <div class="form-control">
+                            ${bannerPreviewUrl
+                                ? `<div class="form-upload-preview-wrap">
+                                    <img src="${bannerPreviewUrl}" alt="机构头图">
+                                    <div class="form-upload-overlay">
+                                        <button class="form-upload-overlay-btn" onclick="previewBannerImage()" title="预览">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3.5"/><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/></svg>
+                                        </button>
+                                        <div class="form-upload-overlay-divider"></div>
+                                        <button class="form-upload-overlay-btn" onclick="removeBanner()" title="删除">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a1 1 0 011-1h6a1 1 0 011 1v2m2 0v14a1 1 0 01-1 1H7a1 1 0 01-1-1V6h14zM10 11v6M14 11v6"/></svg>
+                                        </button>
+                                    </div>
+                                   </div>`
+                                : `<div class="form-upload-box" id="bannerUploadBox" onclick="triggerBannerUpload()">
+                                    <span class="form-upload-icon">＋</span>
+                                    <span class="form-upload-text">点击上传图片</span>
+                                   </div>`
+                            }
+                            <input type="file" id="bannerFileInput" accept="image/png,image/jpg,image/jpeg" style="display:none" onchange="handleBannerUpload(this)">
+                            <div class="form-error-text" id="bannerError">请上传机构头图</div>
+                            <div class="form-hint">在关爱主页顶部展示，图片建议尺寸 750×280px，仅支持 png、jpg、jpeg 图片文件上传</div>
+                        </div>
+                    </div>
+
+                    <!-- 关爱主张 -->
+                    <div class="form-row">
+                        <div class="form-label"><span class="required">*</span>关爱主张</div>
+                        <div class="form-control">
+                            <input class="form-input" id="sloganInput" type="text" maxlength="30" placeholder="请输入关爱主张，例如：专注儿童关爱，为每个孩子点亮希望" value="${sloganText}" oninput="clearSloganError()">
+                            <div class="form-error-text" id="sloganError">请填写关爱主张</div>
+                            <div class="form-input-count"><span id="sloganCount">${sloganText.length}/30</span></div>
+                            <div class="form-hint">关爱主张是您机构的公益理念或使命宣言，将展示在关爱主页头部，帮助用户快速了解您的公益方向。</div>
+                        </div>
+                    </div>
+
+                    <!-- 操作按钮 -->
+                    <div class="form-row">
+                        <div class="form-label"></div>
+                        <div class="form-control">
+                            <div class="form-footer">
+                                <button class="form-btn-primary" onclick="submitConfig()">提交</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderConfigViewMode(showBanner) {
+            return `
+                <div class="page-header">
+                    <div class="breadcrumb">团队管理 > 团队配置</div>
+                    <div class="page-title-row">
+                        <h2>团队配置</h2>
+                    </div>
+                </div>
+
+                ${showBanner ? renderConfigBanner() : ''}
+
+                <div class="form-card">
+                    <div class="form-section-title">关爱主页信息</div>
+
+                    <!-- 机构头图 -->
+                    <div class="form-row">
+                        <div class="form-label">机构头图</div>
+                        <div class="form-control">
+                            ${bannerPreviewUrl
+                                ? `<img class="form-upload-preview" src="${bannerPreviewUrl}" alt="机构头图">`
+                                : '<div class="form-display-value empty">未上传</div>'
+                            }
+                        </div>
+                    </div>
+
+                    <!-- 关爱主张 -->
+                    <div class="form-row">
+                        <div class="form-label">关爱主张</div>
+                        <div class="form-control">
+                            <div class="form-display-value ${sloganText ? '' : 'empty'}">${sloganText || '未填写'}</div>
+                        </div>
+                    </div>
+
+                    <!-- 编辑按钮 -->
+                    <div class="form-row">
+                        <div class="form-label"></div>
+                        <div class="form-control">
+                            <div class="form-footer">
+                                <button class="form-btn-primary" onclick="editConfig()">编辑</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderConfigBanner() {
+            return `
+                <div class="notice-banner" id="noticeBanner">
                     <div class="nb-head">
                         <div class="nb-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1677FF" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 16v-4m0-4h.01"/></svg></div>
                         <div class="nb-title">完善更多信息，提升关爱主页展示效果</div>
                     </div>
                     <div class="nb-body">
                         <div class="nb-desc">
-                            1、填写以下信息后，您的关爱主页将获得更丰富的展示效果，帮助更多爱心商户了解您的公益成效。<br>
-                            2、如信息有更新，也可随时返回此处重新编辑。
+                            填写以下信息后，您的关爱主页将获得更丰富的展示效果，帮助更多用户了解您的公益成效。
                         </div>
-                        <span class="nb-link" onclick="scrollToPending()">去完善 →</span>
-                        <span class="nb-link" onclick="openPreview()" style="margin-left:16px;color:#86909c;">预览主页</span>
+
                     </div>
                     <div class="nb-close" onclick="closeBanner()" title="关闭后下次进入仍会提示">✕</div>
                 </div>
             `;
+        }
+
+        function submitConfig() {
+            const input = document.getElementById('sloganInput');
+            const val = input ? input.value.trim() : '';
+
+            // 清除之前的错误状态
+            clearAllErrors();
+
+            // 校验
+            let hasError = false;
+            if (!bannerPreviewUrl) {
+                const uploadBox = document.getElementById('bannerUploadBox');
+                if (uploadBox) uploadBox.classList.add('has-error');
+                const bannerErr = document.getElementById('bannerError');
+                if (bannerErr) bannerErr.classList.add('visible');
+                hasError = true;
+            }
+            if (!val) {
+                if (input) input.classList.add('has-error');
+                const sloganErr = document.getElementById('sloganError');
+                if (sloganErr) sloganErr.classList.add('visible');
+                hasError = true;
+            }
+            if (hasError) {
+                showGlobalToast('请完成所有必填项');
+                return;
+            }
+
+            sloganText = val;
+            done.banner = true;
+            done.slogan = true;
+            configEditing = false;
+            render();
+            updateSidebarDot();
+        }
+
+        function clearAllErrors() {
+            const uploadBox = document.getElementById('bannerUploadBox');
+            if (uploadBox) uploadBox.classList.remove('has-error');
+            const bannerErr = document.getElementById('bannerError');
+            if (bannerErr) bannerErr.classList.remove('visible');
+            const input = document.getElementById('sloganInput');
+            if (input) input.classList.remove('has-error');
+            const sloganErr = document.getElementById('sloganError');
+            if (sloganErr) sloganErr.classList.remove('visible');
+        }
+
+        function clearSloganError() {
+            const input = document.getElementById('sloganInput');
+            if (input) input.classList.remove('has-error');
+            const sloganErr = document.getElementById('sloganError');
+            if (sloganErr) sloganErr.classList.remove('visible');
+        }
+
+        function showGlobalToast(msg) {
+            let toast = document.getElementById('globalToast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'globalToast';
+                toast.className = 'global-toast';
+                toast.innerHTML = '<span class="toast-icon">!</span><span class="toast-msg"></span>';
+                document.body.appendChild(toast);
+            }
+            toast.querySelector('.toast-msg').textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => { toast.classList.remove('show'); }, 3000);
+        }
+
+        function previewBannerImage() {
+            if (!bannerPreviewUrl) return;
+            window.open(bannerPreviewUrl, '_blank');
+        }
+
+        function cancelConfig() {
+            // 恢复为上次保存的数据
+            if (done.banner && done.slogan) {
+                configEditing = false;
+            }
+            render();
+        }
+
+        function editConfig() {
+            configEditing = true;
+            render();
+            focusSloganInput();
+        }
+
+        // 团队配置页面的 slogan 输入框绑定字数统计
+        function bindConfigSloganCount() {
+            setTimeout(() => {
+                const input = document.getElementById('sloganInput');
+                if (input) {
+                    input.addEventListener('input', () => {
+                        const cnt = document.getElementById('sloganCount');
+                        if (cnt) cnt.textContent = input.value.length + '/30';
+                    });
+                }
+            }, 50);
         }
 
         // ====== 团队信息页 ======
@@ -630,8 +835,6 @@
                         <h2>团队信息</h2>
                     </div>
                 </div>
-
-                ${renderNotificationBanner()}
 
                 <!-- ===== 基础信息 ===== -->
                 <div class="section-card">
@@ -673,50 +876,6 @@
                         <div class="field-item">
                             <div class="field-label">成立日期</div>
                             <div class="field-value empty">${formData.foundDate}</div>
-                        </div>
-
-                        <!-- ★ 机构头图 — 新增字段，嵌入基础信息末尾 -->
-                        <div class="field-item ${!done.banner && activeHighlight ? 'hl' : ''}" id="fp-banner">
-                            <div class="field-label">
-                                机构头图
-                                ${tagHtml('banner')}
-                            </div>
-                            <div class="field-value">
-                                ${done.banner
-                                    ? `<div class="upload-row">
-                                        <img class="upload-preview-img" src="${bannerPreviewUrl}" alt="机构头图">
-                                        ${activeHighlight ? `<div><div class="upload-actions"><span class="inline-btn inline-btn-cancel" onclick="removeBanner()">删除</span><span class="inline-btn inline-btn-ok" onclick="triggerBannerUpload()">重新上传</span></div></div>` : ''}
-                                       </div>`
-                                    : activeHighlight
-                                        ? `<div class="upload-area" onclick="triggerBannerUpload()">
-                                            <span class="upload-area-icon">＋</span>
-                                            <span class="upload-area-text">点击上传封面图</span>
-                                           </div>
-                                           <div class="hint-sub">关爱主页顶部展示用，建议 750×280px</div>
-                                           <input type="file" id="bannerFileInput" accept="image/*" style="display:none" onchange="handleBannerUpload(this)">`
-                                        : '<span class="fill-hint">–</span>'
-                                }
-                            </div>
-                        </div>
-
-                        <!-- ★ 关爱主张 — 新增字段 -->
-                        <div class="field-item ${!done.slogan && activeHighlight ? 'hl' : ''}" id="fp-slogan">
-                            <div class="field-label">
-                                关爱主张
-                                ${tagHtml('slogan')}
-                            </div>
-                            <div class="field-value">
-                                ${done.slogan
-                                    ? `<span>${sloganText}</span>${activeHighlight ? `<span class="fill-link" onclick="editSlogan()" style="margin-left:8px;">修改</span>` : ''}`
-                                    : activeHighlight
-                                        ? `<div class="inline-input-row">
-                                            <input class="inline-input" id="sloganInput" type="text" maxlength="30" placeholder="例如：专注儿童关爱，为每个孩子点亮希望" value="${sloganText}">
-                                            <span class="inline-btn inline-btn-ok" onclick="confirmSlogan()">确定</span>
-                                           </div>
-                                           <div class="hint-sub">关爱主张是您机构的公益理念或使命宣言，将展示在关爱主页头部，帮助爱心商户快速了解您的公益方向。<br><span class="char-count" id="sloganCount">${sloganText.length}/30</span></div>`
-                                        : '<span class="fill-hint">–</span>'
-                                }
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -883,12 +1042,14 @@
 
             const pageMap = {
                 'info': renderTeamInfoPage,
+                'team-config': renderTeamConfigPage,
                 'cooperation-intent': renderCooperationPage,
             };
 
             const titleMap = {
                 'overview': '团队概览',
                 'members': '团队成员',
+                'team-config': '团队配置',
                 'merchant-account': '商户号',
                 'merchant-list': '商家列表',
                 'merchant-audit': '商家审核',
@@ -907,13 +1068,10 @@
             }
 
             updateSidebarDot();
-        }
 
-        // ====== 检查是否全部完善，自动退出编辑模式 ======
-        function checkAllDone() {
-            if (pending().length === 0) {
-                activeHighlight = false;
-                render();
+            // 团队配置页面绑定字数统计
+            if (currentPage === 'team-config' && configEditing) {
+                bindConfigSloganCount();
             }
         }
 
@@ -931,34 +1089,6 @@
             
             render();
         });
-
-        // ====== 弹窗逻辑 ======
-        function renderModalMissingItems() {
-            // 弹窗只展示 关爱主张、机构头图 两个字段
-            const showKeys = ['slogan', 'banner'];
-            const missingFields = getHomepageFields().filter(f => !f.filled && showKeys.includes(f.key));
-            const container = document.getElementById('modalMissingItems');
-            container.innerHTML = missingFields.map(f => `
-                <div class="m-row">
-                    <span class="m-row-name">${f.name}</span>
-                    <span class="m-row-tag">待完善</span>
-                </div>
-            `).join('');
-        }
-
-        function showModal() { document.getElementById('modalOverlay').classList.remove('hidden'); }
-        function closeModal() {
-            document.getElementById('modalOverlay').classList.add('hidden');
-            localStorage.setItem('homepage_modal_dismissed', '1');
-        }
-        function goFill() {
-            closeModal();
-            setTimeout(scrollToPending, 250);
-        }
-
-        document.getElementById('modalClose').addEventListener('click', closeModal);
-        document.getElementById('modalLater').addEventListener('click', closeModal);
-        document.getElementById('modalGo').addEventListener('click', goFill);
 
         // ====== 关爱主页预览 ======
         function openPreview() {
@@ -1024,7 +1154,6 @@
         });
 
         // ====== 初始化 ======
-        renderModalMissingItems();
         render();
     </script>
 </body>
